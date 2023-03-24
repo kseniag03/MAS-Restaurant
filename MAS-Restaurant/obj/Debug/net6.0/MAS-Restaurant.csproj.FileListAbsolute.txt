@@ -1,0 +1,15 @@
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/bin/Debug/net6.0/MAS-Restaurant
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/bin/Debug/net6.0/MAS-Restaurant.deps.json
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/bin/Debug/net6.0/MAS-Restaurant.runtimeconfig.json
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/bin/Debug/net6.0/MAS-Restaurant.dll
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/bin/Debug/net6.0/MAS-Restaurant.pdb
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.csproj.AssemblyReference.cache
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.GeneratedMSBuildEditorConfig.editorconfig
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.AssemblyInfoInputs.cache
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.AssemblyInfo.cs
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.csproj.CoreCompileInputs.cache
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.dll
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/refint/MAS-Restaurant.dll
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.pdb
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/MAS-Restaurant.genruntimeconfig.cache
+/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/Debug/net6.0/ref/MAS-Restaurant.dll
