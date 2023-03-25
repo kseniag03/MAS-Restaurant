@@ -4,6 +4,19 @@ namespace MAS_Restaurant
 {
     public class JsonSerializer
     {
+        public static void WriteJsonFile<TElement>(string filePath, List<TElement> list, string logName)
+        {
+            var log = new Dictionary<string, List<TElement>> { { logName, list } };
+
+            var jsonString = System.Text.Json.JsonSerializer.Serialize(log, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            });
+
+            File.WriteAllText(filePath, jsonString);
+        }
+
         public static IEnumerable<TElement>? ReadJsonFile<TElement>(string filePath)
         {
             var listPropertyName = Path.GetFileNameWithoutExtension(filePath);

@@ -100,14 +100,32 @@ namespace MAS_Restaurant
                 }
             }
 
+
+            var p = new Process
+            {
+                Id = 12,
+                OrderDishId = 625,
+                Started = default,
+                Ended = default,
+                IsActive = false,
+                Operations = new List<ProcessOperation>
+                {
+                    new ProcessOperation
+                    {
+                        Id = 1
+                    },
+                    new ProcessOperation
+                    {
+                        Id = 17
+                    }
+                }
+            };
+
+            var processList = new List<Process>();
+            processList.Add(p);
+            
+            JsonSerializer.WriteJsonFile(Path.Combine(folderPath, "process_log.json"), processList, "process_log");
         }
-        
-        
-
-
-        
-        
-        
 
     }
 }

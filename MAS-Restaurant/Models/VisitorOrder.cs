@@ -21,8 +21,8 @@ namespace MAS_Restaurant.Models
         
         public override string ToString()
         {
-            var str = $"VisitorOrder with name: { Name }, started at { Started }, ended at { Ended }, check: { Total }\n"
-                      + "\nOrder with following dishes:\n";
+            var str = $"VisitorOrder with name: { Name }, started at { Started }, ended at { Ended }, " +
+                      $"check: { Total }\n\nOrder with following dishes:\n";
             var dishesString = Dishes?.Aggregate("", (acc, p) => acc + p.ToString()) ?? "";
             if (string.IsNullOrEmpty(dishesString))
             {

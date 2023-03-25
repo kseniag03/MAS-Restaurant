@@ -18,8 +18,8 @@ namespace MAS_Restaurant.Models
         
         public override string ToString()
         {
-            return $"MenuDish with id: { Id }, price: { Price } is { (IsActive ? "" : "not ") }active\n"
-                   + $"There is the dish card with id: { DishCardId }\n";
+            return $"MenuDish with id: { Id }, price: { Price } is { (IsActive ? "" : "not ") }active\n" +
+                   $"There is the dish card with id: { DishCardId }\n";
         }
     }
 }

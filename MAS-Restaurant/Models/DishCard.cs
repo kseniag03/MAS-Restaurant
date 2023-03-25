@@ -24,9 +24,9 @@ namespace MAS_Restaurant.Models
         
         public override string ToString()
         {
-            var str = $"DishCard with id: { Id }, name: { Name }, says: { Description }\n"
-                      + $"Time for cooking: { Time }, using { EquipmentTypeId } equipment type id\n"
-                      + "\nUsing following operations:\n";
+            var str = $"DishCard with id: { Id }, name: { Name }, says: { Description }\n" +
+                      $"Time for cooking: { Time }, using { EquipmentTypeId } equipment type id\n" +
+                      $"\nUsing following operations:\n";
             var operationsString = Operations?.Aggregate("", (acc, p) => acc + p.ToString()) ?? "";
             if (string.IsNullOrEmpty(operationsString))
             {
