@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Requests
 {
-    public class MenuDish
+    public struct MenuDishRequest
     {
         [JsonPropertyName("menu_dish_id")]
         public int Id { get; set; }

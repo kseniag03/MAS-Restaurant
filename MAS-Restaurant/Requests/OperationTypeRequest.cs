@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Requests
 {
-    public class OperationType
+    public struct OperationTypeRequest
     {
         [JsonPropertyName("oper_type_id")]
         public int Id { get; set; }

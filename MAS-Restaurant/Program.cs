@@ -1,16 +1,17 @@
-﻿using MAS_Restaurant.Models;
+﻿using MAS_Restaurant.Requests;
+using MAS_Restaurant.Responces;
 
 using System.IO;
 using System.Reflection;
 
 namespace MAS_Restaurant
 {
-
     public static class FileSettings
     {
         public const string folderTxt = "json-txt";
-        public const string folderJson = "json-json";
         public const string extensionTxt = "*.txt";
+        public const string folderJsonInput = "json-json-input";
+        public const string folderJsonOutput = "json-json-output";
         public const string extensionJson = "*.json";
     }
     
@@ -32,24 +33,34 @@ namespace MAS_Restaurant
                 path = Directory.GetParent(path).FullName;
             }
             Console.WriteLine(path);
-            var folderPath = Path.Combine(path, FileSettings.folderJson);
+            var folderPath = Path.Combine(path, FileSettings.folderJsonInput);
             Console.WriteLine(folderPath);
             Console.WriteLine();
 
-/*
-            var cookers = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.Cooker>(Path.Combine(folderPath, "cookers.txt"));
-            var dishCards = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.DishCard>(Path.Combine(folderPath, "dish_cards.txt"));
-            var equipments = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.Equipment>(Path.Combine(folderPath, "equipment.txt"));
-            var equipmentTypes = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.EquipmentType>(Path.Combine(folderPath, "equipment_type.txt"));
-            var menuDishes = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.MenuDish>(Path.Combine(folderPath, "menu_dishes.txt"));
-            var operationTypes = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.OperationType>(Path.Combine(folderPath, "operation_types.txt"));
-            var productTypes = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.ProductType>(Path.Combine(folderPath, "product_types.txt"));
-            var products = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.Product>(Path.Combine(folderPath, "products.txt"));
-            var visitorsOrders = JsonSerializer.ReadJsonFile<MAS_Restaurant.Models.VisitorOrder>(Path.Combine(folderPath, "visitors_orders.txt"));
-*/          
-
             string[] files = Directory.GetFiles(folderPath, FileSettings.extensionJson);
 
+            /*
+            IEnumerable<CookerRequest> cookers = Enumerable.Empty<CookerRequest>();
+            IEnumerable<DishCardRequest> dishCards = Enumerable.Empty<DishCardRequest>();
+            IEnumerable<EquipmentRequest> equipments = Enumerable.Empty<EquipmentRequest>();
+            IEnumerable<EquipmentTypeRequest> equipmentTypes = Enumerable.Empty<EquipmentTypeRequest>();
+            IEnumerable<MenuDishRequest> menuDishes = Enumerable.Empty<MenuDishRequest>();
+            IEnumerable<OperationTypeRequest> operationTypes = Enumerable.Empty<OperationTypeRequest>();
+            IEnumerable<ProductTypeRequest> productTypes = Enumerable.Empty<ProductTypeRequest>();
+            IEnumerable<ProductRequest> products = Enumerable.Empty<ProductRequest>();
+            IEnumerable<VisitorOrderRequest> visitorsOrders = Enumerable.Empty<VisitorOrderRequest>();*/
+            
+            
+            var cookers = Enumerable.Empty<CookerRequest>();
+            var dishCards = Enumerable.Empty<DishCardRequest>();
+            var equipments = Enumerable.Empty<EquipmentRequest>();
+            var equipmentTypes = Enumerable.Empty<EquipmentTypeRequest>();
+            var menuDishes = Enumerable.Empty<MenuDishRequest>();
+            var operationTypes = Enumerable.Empty<OperationTypeRequest>();
+            var productTypes = Enumerable.Empty<ProductTypeRequest>();
+            var products = Enumerable.Empty<ProductRequest>();
+            var visitorsOrders = Enumerable.Empty<VisitorOrderRequest>();
+            
             foreach (var file in files)
             {
                 string fileName = Path.GetFileNameWithoutExtension(file);
@@ -58,39 +69,39 @@ namespace MAS_Restaurant
                 switch (fileName)
                 {
                     case "cookers":
-                        var cookers = JsonSerializer.ReadJsonFile<Cooker>(filePath);
+                        cookers = JsonSerializer.ReadJsonFile<CookerRequest>(filePath);
                         // do something with cookers
                         break;
                     case "dish_cards":
-                        var dishCards = JsonSerializer.ReadJsonFile<DishCard>(filePath);
+                        dishCards = JsonSerializer.ReadJsonFile<DishCardRequest>(filePath);
                         // do something with dishCards
                         break;
                     case "equipment":
-                        var equipments = JsonSerializer.ReadJsonFile<Equipment>(filePath);
+                        equipments = JsonSerializer.ReadJsonFile<EquipmentRequest>(filePath);
                         // do something with equipments
                         break;
                     case "equipment_type":
-                        var equipmentTypes = JsonSerializer.ReadJsonFile<EquipmentType>(filePath);
+                        equipmentTypes = JsonSerializer.ReadJsonFile<EquipmentTypeRequest>(filePath);
                         // do something with equipmentTypes
                         break;
                     case "menu_dishes":
-                        var menuDishes = JsonSerializer.ReadJsonFile<MenuDish>(filePath);
+                        menuDishes = JsonSerializer.ReadJsonFile<MenuDishRequest>(filePath);
                         // do something with menuDishes
                         break;
                     case "operation_types":
-                        var operationTypes = JsonSerializer.ReadJsonFile<OperationType>(filePath);
+                        operationTypes = JsonSerializer.ReadJsonFile<OperationTypeRequest>(filePath);
                         // do something with operationTypes
                         break;
                     case "product_types":
-                        var productTypes = JsonSerializer.ReadJsonFile<ProductType>(filePath);
+                        productTypes = JsonSerializer.ReadJsonFile<ProductTypeRequest>(filePath);
                         // do something with productTypes
                         break;
                     case "products":
-                        var products = JsonSerializer.ReadJsonFile<Product>(filePath);
+                        products = JsonSerializer.ReadJsonFile<ProductRequest>(filePath);
                         // do something with products
                         break;
                     case "visitors_orders":
-                        var visitorsOrders = JsonSerializer.ReadJsonFile<VisitorOrder>(filePath);
+                        visitorsOrders = JsonSerializer.ReadJsonFile<VisitorOrderRequest>(filePath);
                         // do something with visitorsOrders
                         break;
                     default:
@@ -100,32 +111,77 @@ namespace MAS_Restaurant
                 }
             }
 
+            if (dishCards.ToList() != null)
+            {
+                var updatedDishCards = new List<DishCardRequest>();
+                foreach (var card in dishCards)
+                {
+                    var updatedOperations = new List<OperationRequest>();
+                    foreach (var op in card.Operations)
+                    {
+                        var updatedProducts = new List<ProductRequest>();
+                        foreach (var product in op.Products)
+                        {
+                            foreach (var productType in products)
+                            {
+                                if (product.ProductTypeId == productType.ProductTypeId)
+                                {
+                                    var updatedProduct = new ProductRequest
+                                    {
+                                        Id = productType.Id,
+                                        Name = productType.Name,
+                                        Company = productType.Company,
+                                        Quantity = productType.Quantity,
+                                        Unit = productType.Unit,
+                                        Cost = productType.Cost,
+                                        ProductTypeId = productType.ProductTypeId,
+                                        Delivered = productType.Delivered,
+                                        ValidUntil = productType.ValidUntil
+                                    };
+                                    updatedProducts.Add(updatedProduct);
+                                }
+                            }
+                        }
+                        var updatedOp = op with { Products = updatedProducts};
+                        updatedOperations.Add(updatedOp);
+                    }
+                    var updatedCard = card with { Operations = updatedOperations };
+                    updatedDishCards.Add(updatedCard);
+                }
+                dishCards = updatedDishCards;
+            }
+            
+            JsonSerializer.PrintList(dishCards);
 
-            var p = new Process
+            var p = new ProcessResponce
             {
                 Id = 12,
                 OrderDishId = 625,
                 Started = default,
                 Ended = default,
                 IsActive = false,
-                Operations = new List<ProcessOperation>
+                Operations = new List<ProcessOperationResponce>
                 {
-                    new ProcessOperation
+                    new()
                     {
                         Id = 1
                     },
-                    new ProcessOperation
+                    new()
                     {
                         Id = 17
                     }
                 }
             };
 
-            var processList = new List<Process>();
+            var processList = new List<ProcessResponce>();
             processList.Add(p);
             
-            JsonSerializer.WriteJsonFile(Path.Combine(folderPath, "process_log.json"), processList, "process_log");
+            JsonSerializer.WriteJsonFile(Path.Combine(Path.Combine(path, FileSettings.folderJsonOutput), "process_log.json"), processList, "process_log");
         }
 
     }
 }
+
+/*
+ * 
+*/

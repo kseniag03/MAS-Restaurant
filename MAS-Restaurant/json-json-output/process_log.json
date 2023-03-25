@@ -1,0 +1,19 @@
+{
+  "process_log": [
+    {
+      "proc_id": 12,
+      "ord_dish": 625,
+      "proc_started": "0001-01-01T00:00:00+00:00",
+      "proc_ended": "0001-01-01T00:00:00+00:00",
+      "proc_active": false,
+      "proc_operations": [
+        {
+          "proc_oper": 1
+        },
+        {
+          "proc_oper": 17
+        }
+      ]
+    }
+  ]
+}

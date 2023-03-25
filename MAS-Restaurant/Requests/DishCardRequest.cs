@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Requests
 {
-    public class DishCard
+    public struct DishCardRequest
     {
         [JsonPropertyName("card_id")]
         public int Id { get; set; }
@@ -20,7 +20,7 @@ namespace MAS_Restaurant.Models
         public int EquipmentTypeId { get; set; }
         
         [JsonPropertyName("operations")]
-        public List<Operation>? Operations { get; set; }
+        public List<OperationRequest>? Operations { get; set; }
         
         public override string ToString()
         {

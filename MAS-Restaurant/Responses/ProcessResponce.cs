@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Responces
 {
-    public class Process
+    public struct ProcessResponce
     {
         [JsonPropertyName("proc_id")]
         public int Id { get; set; }
@@ -20,7 +20,7 @@ namespace MAS_Restaurant.Models
         public bool IsActive { get; set; }
 
         [JsonPropertyName("proc_operations")]
-        public List<ProcessOperation> Operations { get; set; }
+        public List<ProcessOperationResponce> Operations { get; set; }
         
         public override string ToString()
         {

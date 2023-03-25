@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Requests
 {
-    public class Operation
+    public struct OperationRequest
     {
         [JsonPropertyName("oper_type")]
         public int OperationTypeId { get; set; }
@@ -14,7 +14,7 @@ namespace MAS_Restaurant.Models
         public int AsyncPoint { get; set; }
         
         [JsonPropertyName("oper_products")]
-        public List<Product>? Products { get; set; }
+        public List<ProductRequest>? Products { get; set; }
         
         public override string ToString()
         {

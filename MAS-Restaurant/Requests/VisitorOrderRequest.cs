@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MAS_Restaurant.Models
+namespace MAS_Restaurant.Requests
 {
-    public class VisitorOrder
+    public struct VisitorOrderRequest
     {
         [JsonPropertyName("vis_name")]
         public String? Name { get; set; }
@@ -17,7 +17,7 @@ namespace MAS_Restaurant.Models
         public double Total { get; set; } // for statistics
         
         [JsonPropertyName("vis_ord_dishes")]
-        public List<OrderDish>? Dishes { get; set; }
+        public List<OrderDishRequest>? Dishes { get; set; }
         
         public override string ToString()
         {
