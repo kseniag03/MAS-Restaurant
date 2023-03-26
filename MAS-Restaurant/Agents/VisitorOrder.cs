@@ -57,9 +57,13 @@ internal class VisitorOrder : IAgent
             Console.WriteLine("Visitor waiting for order");
         }
 
-        if (messages.Pop(). == 1)
+        if (messages.Pop().Text[0] == 1)
         {
-
+            Console.WriteLine("Visitor take order");
+        }
+        else
+        {
+            Console.WriteLine("Visitor don't take order");
         }
 
         Console.WriteLine("Visitor find dishCard");
