@@ -1,8 +1,9 @@
-﻿using MAS_Restaurant.Requests;
+﻿using MAS_Restaurant.Agents;
+using MAS_Restaurant.Requests;
 using MAS_Restaurant.Responces;
-
-using System.IO;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using MAS_Restaurant.Utility;
 
 namespace MAS_Restaurant
 {
@@ -152,6 +153,21 @@ namespace MAS_Restaurant
             }
             
             JsonSerializer.PrintList(dishCards);
+
+            // start
+
+            SuperVisor visor = new SuperVisor().
+                BuildCookers(cookers).
+                BuildDishCards(dishCards).
+                BuildEquipments(equipmentTypes, equipments).
+                BuildOperations(operationTypes).
+                BuildProducts(productTypes, products).
+                BuildMenuDishes(menuDishes).
+                BuildVisitorsOrders(visitorsOrders);
+
+            // action
+            visor.Action();
+
 
             var p = new ProcessResponce
             {

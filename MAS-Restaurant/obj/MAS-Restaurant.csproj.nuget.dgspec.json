@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/MAS-Restaurant.csproj": {}
+    "C:\\Users\\Max\\Documents\\GitHub\\MAS-Restaurant\\MAS-Restaurant\\MAS-Restaurant.csproj": {}
   },
   "projects": {
-    "/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/MAS-Restaurant.csproj": {
+    "C:\\Users\\Max\\Documents\\GitHub\\MAS-Restaurant\\MAS-Restaurant\\MAS-Restaurant.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/MAS-Restaurant.csproj",
+        "projectUniqueName": "C:\\Users\\Max\\Documents\\GitHub\\MAS-Restaurant\\MAS-Restaurant\\MAS-Restaurant.csproj",
         "projectName": "MAS-Restaurant",
-        "projectPath": "/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/MAS-Restaurant.csproj",
-        "packagesPath": "/Users/uliabakurskaa/.nuget/packages/",
-        "outputPath": "/Users/uliabakurskaa/Documents/sharp/MAS-Restaurant/obj/",
+        "projectPath": "C:\\Users\\Max\\Documents\\GitHub\\MAS-Restaurant\\MAS-Restaurant\\MAS-Restaurant.csproj",
+        "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Max\\Documents\\GitHub\\MAS-Restaurant\\MAS-Restaurant\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/uliabakurskaa/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,6 +43,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -53,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.407/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
