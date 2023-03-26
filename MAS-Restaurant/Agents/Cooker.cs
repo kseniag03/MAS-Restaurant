@@ -25,6 +25,7 @@ internal class Cooker : IAgent
         this.isActive = isActive;
         Cooking = false;
         _agents = agents;
+        _token = token;
     }
 
     public void Action()

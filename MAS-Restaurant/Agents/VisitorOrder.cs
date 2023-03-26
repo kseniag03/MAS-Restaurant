@@ -40,16 +40,27 @@ internal class VisitorOrder : IAgent
     {
         Console.WriteLine("Visitor start working"); 
 
-        var dishCard = _agents.
+        var menuDish = _agents.
             Where(x => x.Value is MenuDish).
             Select(x => x.Value as MenuDish).
             Where(x => x.id == dishes[0].MenuDishId).
             First();
 
-        SendMessage(dishCard, new Message(
+        SendMessage(menuDish, new Message(
             this,
-            dishCard,
+            menuDish,
             dishes.Select(x => x.MenuDishId).ToList()));
+
+        while (messages.Count == 0)
+        {
+            Thread.Sleep(1000);
+            Console.WriteLine("Visitor waiting for order");
+        }
+
+        if (messages.Pop(). == 1)
+        {
+
+        }
 
         Console.WriteLine("Visitor find dishCard");
     }
