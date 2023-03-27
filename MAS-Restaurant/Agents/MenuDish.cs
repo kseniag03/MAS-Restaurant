@@ -4,17 +4,21 @@ using MAS_Restaurant.Utility;
 namespace MAS_Restaurant.Agents;
 internal class MenuDish : IAgent
 {
-    public int id;
-    public int dishCardId;
-    public bool isActive;
-    Dictionary<int, IAgent> _agents;
-    CancelationToken _token;
+    public int Id { get; set; }
+    public int DishCardId { get; set; }
+    public bool IsActive { get; set; }
+    private Dictionary<int, IAgent> _agents;
+    private CancelationToken _token;
 
-    public MenuDish(int id, int dishCardId, bool isActive, Dictionary<int, IAgent> agents, CancelationToken token)
+    public MenuDish(int id,
+        int dishCardId,
+        bool isActive,
+        Dictionary<int, IAgent> agents,
+        CancelationToken token)
     {
-        this.id = id;
-        this.dishCardId = dishCardId;
-        this.isActive = isActive;
+        Id = id;
+        DishCardId = dishCardId;
+        IsActive = isActive;
         _agents = agents;
         _token = token;
     }
@@ -33,14 +37,16 @@ internal class MenuDish : IAgent
 
                 var dishCard = _agents.Where(x => x.Value is DishCard).
                     Select(x => x.Value as DishCard).
-                    Where(x => x.id == dishCardId).
-                    First();
+                    Where(x => x.Id == DishCardId).
+                    FirstOrDefault();
 
-                SendMessage(dishCard, new Message(message.Sender, dishCard, new List<int>() {}));
+                if (dishCard != null && message != null)
+                {
+                    SendMessage(dishCard, new Message(message.Sender, dishCard, new List<int>() { }));
+                }
             } 
             else
             {
-                Console.WriteLine(messages.Count);
                 Thread.Sleep(1000);
             }
         }
@@ -48,12 +54,13 @@ internal class MenuDish : IAgent
 
     public void GetMessage(Message message)
     {
-        Console.WriteLine("Dish take message");
+        Console.WriteLine("MenuDish take message");
         messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
+        Console.WriteLine($"MenuDish send message to {agent}");
         agent.GetMessage(message);
     }
 }

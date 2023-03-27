@@ -9,16 +9,20 @@ using System.Threading.Tasks;
 namespace MAS_Restaurant.Agents;
 internal class Equipment : IAgent
 {
-    public int EquipmentTypeId;
-    public string? Name;
-    public int Count;
-    Dictionary<int, IAgent> _agents;
-    CancelationToken _token;
+    public int EquipmentTypeId { get; set; }
+    private string? _name;
+    public int Count { get; set; }
+    private Dictionary<int, IAgent> _agents;
+    private CancelationToken _token;
 
-    public Equipment(int equipmentTypeId, string? name, int count, Dictionary<int, IAgent> agents, CancelationToken token)
+    public Equipment(int equipmentTypeId,
+        string? name,
+        int count,
+        Dictionary<int, IAgent> agents,
+        CancelationToken token)
     {
         EquipmentTypeId = equipmentTypeId;
-        Name = name;
+        _name = name;
         Count = count;
         _agents = agents;
         _token = token;
@@ -33,11 +37,11 @@ internal class Equipment : IAgent
 
     public void GetMessage(Message message)
     {
-        throw new NotImplementedException();
+        messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
-        throw new NotImplementedException();
+        agent.GetMessage(message);
     }
 }

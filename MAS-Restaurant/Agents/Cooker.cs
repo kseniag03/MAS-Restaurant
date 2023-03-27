@@ -4,10 +4,11 @@ using MAS_Restaurant.Utility;
 namespace MAS_Restaurant.Agents;
 internal class Cooker : IAgent
 {
-    public int id;
-    public string? name;
-    public bool isActive;
-    public bool Cooking;
+    private int _id;
+    private string? _name;
+    public bool IsActive { get; set; }
+    public bool Cooking { get; set; }
+
     private Dictionary<int, IAgent> _agents;
     CancelationToken _token;
 
@@ -20,9 +21,9 @@ internal class Cooker : IAgent
         Dictionary<int, IAgent> agents,
         CancelationToken token)
     {
-        this.id = id;
-        this.name = name;
-        this.isActive = isActive;
+        _id = id;
+        _name = name;
+        IsActive = isActive;
         Cooking = false;
         _agents = agents;
         _token = token;
@@ -34,19 +35,15 @@ internal class Cooker : IAgent
         {
             if (messages.Count > 0)
             {
-                isActive = false;
+                IsActive = false;
 
                 Console.WriteLine("Cooker start working");
 
                 var message = messages.Pop();
 
-                Console.WriteLine("Cook read " + message.Text.Count);
-
                 IsOrderReady(message.Text, message);
 
-                isActive = true;
-                // var equipments = _agents.Where(x => x.Value is Equipment).Select(x => x.Value as Equipment)
-                //.Where(x => x.Count > 0);
+                IsActive = true;
             }
             else
             {
@@ -58,13 +55,11 @@ internal class Cooker : IAgent
     public void GetMessage(Message message)
     {
         messages.Push(message);
-        //throw new NotImplementedException();
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
         agent.GetMessage(message);
-        //throw new NotImplementedException();
     }
 
     private void IsOrderReady(List<int> idTime, Message message)
@@ -122,12 +117,14 @@ internal class Cooker : IAgent
             // GetMessage(); from equip to define if it is active or not
             // if not active
 
-            Console.WriteLine("Cook send message" + message.Sender.GetType());
+            Console.WriteLine($"Cook send message to {message.Sender}");
 
-            SendMessage(message.Sender, new Message(
-                this,
-                equipment,
-                new List<int>() { 1 })
+            SendMessage(
+                message.Sender,
+                new Message(
+                    this,
+                    equipment,
+                    new List<int>() { 1 })
             ); // send to equipment to check by id property isActive ?
 
 

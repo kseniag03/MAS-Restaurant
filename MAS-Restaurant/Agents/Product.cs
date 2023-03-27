@@ -5,18 +5,22 @@ namespace MAS_Restaurant.Agents;
 
 internal class Product : IAgent
 {
-    public int Id;
-    public string? Name;
-    public bool IsFood;
-    public int Count;
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    private bool _isFood;
+    public int Count { get; set; }
     Dictionary<int, IAgent> _agents;
     CancelationToken _token;
 
-    public Product(int id, string? name, bool isFood, int count, Dictionary<int, IAgent> agents, CancelationToken token)
+    public Product(int id,
+        string? name, bool isFood,
+        int count,
+        Dictionary<int, IAgent> agents,
+        CancelationToken token)
     {
         Id = id;
         Name = name;
-        IsFood = isFood;
+        _isFood = isFood;
         Count = count;
         _agents = agents;
         _token = token;
@@ -31,11 +35,11 @@ internal class Product : IAgent
 
     public void GetMessage(Message message)
     {
-        throw new NotImplementedException();
+        messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
-        throw new NotImplementedException();
+        agent.GetMessage(message);
     }
 }

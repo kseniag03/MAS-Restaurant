@@ -4,15 +4,15 @@ using MAS_Restaurant.Utility;
 namespace MAS_Restaurant.Agents;
 internal class Operation : IAgent
 {
-    public int id;
-    private string? name;
-    Dictionary<int, IAgent> _agents;
-    CancelationToken _token;
+    public int Id { get; set; }
+    private string? _name;
+    private Dictionary<int, IAgent> _agents;
+    private CancelationToken _token;
 
     public Operation(int id, string? name, Dictionary<int, IAgent> agents, CancelationToken token)
     {
-        this.id = id;
-        this.name = name;
+        Id = id;
+        _name = name;
         _agents = agents;
         _token = token;
     }
@@ -35,16 +35,18 @@ internal class Operation : IAgent
 
     public void Action()
     {
-        Console.WriteLine("Operation start working");
-
         while (_token.Atcive)
         {
             if (messages.Count > 0)
             {
+                Console.WriteLine($"Operation {Id} start working");
                 var message = messages.Pop();
                 var list = message.Text;
 
-                var operationsCount = list.SkipWhile(x => x != -1).Skip(1).ToList();
+                var operationsCount = list.
+                    SkipWhile(x => x != -1).
+                    Skip(1).
+                    ToList();
                 var productsWithRepeat = list.TakeWhile(x => x != -1).ToList();
                 var productsCount = new Dictionary<int, int>();
 
@@ -60,18 +62,10 @@ internal class Operation : IAgent
                     }
                 }
 
-                string res = "";
-                foreach (var x in productsCount)
-                {
-                    res += x.Key + " ";
-                }
-                Console.WriteLine("res " + res);
-
                 bool flag = true;
 
                 foreach (var product in productsCount)
                 {
-                    Console.WriteLine("key " + product.Key);
                     var storeProduct = _agents
                         .Where(x => x.Value is Product)
                         .Select(x => x.Value as Product)
@@ -100,7 +94,7 @@ internal class Operation : IAgent
                     var cooker = _agents
                         .Where(x => x.Value is Cooker)
                         .Select(x => x.Value as Cooker)
-                        .Where(x => x.isActive)
+                        .Where(x => x.IsActive)
                         .First();
 
                     SendMessage(cooker, new Message(
@@ -116,11 +110,13 @@ internal class Operation : IAgent
 
     public void GetMessage(Message message)
     {
+        Console.WriteLine("Operation take message");
         messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
+        Console.WriteLine($"Operation send message to {agent}");
         agent.GetMessage(message);
     }
 }

@@ -12,8 +12,8 @@ internal class VisitorOrder : IAgent
     private double total;
     private List<OrderDishRequest>? dishes;
     public bool Done;
-    Dictionary<int, IAgent> _agents;
-    CancelationToken _token;
+    private Dictionary<int, IAgent> _agents;
+    private CancelationToken _token;
 
     public VisitorOrder(
         int id,
@@ -45,7 +45,7 @@ internal class VisitorOrder : IAgent
         var menuDish = _agents.
             Where(x => x.Value is MenuDish).
             Select(x => x.Value as MenuDish).
-            Where(x => x.id == dishes[0].MenuDishId).
+            Where(x => x.Id == dishes[0].MenuDishId).
             First();
 
         SendMessage(menuDish, new Message(
@@ -65,12 +65,8 @@ internal class VisitorOrder : IAgent
 
             int index = message.Text[0] + 1;
 
-            Console.WriteLine("start index " + index);
-
             while (index > 0)
             {
-                Console.WriteLine("index " + index);
-
                 if (messages.Count > 1)
                 {
                     messages.Pop();
@@ -100,7 +96,7 @@ internal class VisitorOrder : IAgent
 
     public void SendMessage(IAgent agent, Message message)
     {
-        Console.WriteLine("Visitor send message");
+        Console.WriteLine($"Visitor send message to {agent}");
         agent.GetMessage(message);
     }
 }
