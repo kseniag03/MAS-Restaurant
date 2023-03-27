@@ -23,31 +23,37 @@ internal class MenuDish : IAgent
 
     public void Action()
     {
-        Console.WriteLine("MenuDish start working");
-
         while (_token.Atcive)
         {
             if (messages.Count > 0)
             {
                 var message = messages.Pop();
 
+                Console.WriteLine("MenuDish start working");
+
                 var dishCard = _agents.Where(x => x.Value is DishCard).
                     Select(x => x.Value as DishCard).
                     Where(x => x.id == dishCardId).
                     First();
 
-
+                SendMessage(dishCard, new Message(message.Sender, dishCard, new List<int>() {}));
+            } 
+            else
+            {
+                Console.WriteLine(messages.Count);
+                Thread.Sleep(1000);
             }
         }
     }
 
     public void GetMessage(Message message)
     {
+        Console.WriteLine("Dish take message");
         messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
-        throw new NotImplementedException();
+        agent.GetMessage(message);
     }
 }

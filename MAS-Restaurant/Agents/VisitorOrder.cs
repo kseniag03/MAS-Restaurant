@@ -11,6 +11,7 @@ internal class VisitorOrder : IAgent
     private DateTimeOffset ended;
     private double total;
     private List<OrderDishRequest>? dishes;
+    public bool Done;
     Dictionary<int, IAgent> _agents;
     CancelationToken _token;
 
@@ -32,6 +33,7 @@ internal class VisitorOrder : IAgent
         this.dishes = dishes;
         _agents = agents;
         _token = token;
+        Done = false;
     }
 
     public Stack<Message> messages = new();
@@ -57,16 +59,38 @@ internal class VisitorOrder : IAgent
             Console.WriteLine("Visitor waiting for order");
         }
 
-        if (messages.Pop().Text[0] == 1)
+        if (messages.Where(x => x.Sender is DishCard).FirstOrDefault() != null)
         {
+            var message = messages.Where(x => x.Sender is DishCard).First();
+
+            int index = message.Text[0] + 1;
+
+            Console.WriteLine("start index " + index);
+
+            while (index > 0)
+            {
+                Console.WriteLine("index " + index);
+
+                if (messages.Count > 1)
+                {
+                    messages.Pop();
+                    index -= 1;
+                }
+                else
+                {
+                    Console.WriteLine("Visitor waiting for order");
+                    Thread.Sleep(1000);
+                }
+            }
+
             Console.WriteLine("Visitor take order");
+            Done = true;
         }
         else
         {
-            Console.WriteLine("Visitor don't take order");
+            Thread.Sleep(1000);
+            Console.WriteLine("Visitor waiting for order");
         }
-
-        Console.WriteLine("Visitor find dishCard");
     }
 
     public void GetMessage(Message message)
@@ -76,6 +100,7 @@ internal class VisitorOrder : IAgent
 
     public void SendMessage(IAgent agent, Message message)
     {
+        Console.WriteLine("Visitor send message");
         agent.GetMessage(message);
     }
 }

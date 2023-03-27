@@ -41,7 +41,20 @@ internal class SuperVisor : IAgent
 
         while (_token.Atcive)
         {
-            _token.Atcive = false;
+            var activeOrders = _agents.
+                Where(x => x.Value is VisitorOrder).
+                Select(x => x.Value as VisitorOrder).
+                Where(x => x.Done == false).
+                FirstOrDefault();
+
+            if (activeOrders == null)
+            {
+                Console.WriteLine("All orders done!");
+                _token.Atcive = false;
+            } else
+            {
+                Thread.Sleep(1000);
+            }
         }
         // throw new NotImplementedException();
     }
@@ -79,6 +92,7 @@ internal class SuperVisor : IAgent
                 x.Id,
                 x.Name,
                 x.Operations,
+                x.EquipmentTypeId,
                 _agents,
                 _token));
 
