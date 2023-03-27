@@ -14,6 +14,7 @@ internal class VisitorOrder : IAgent
     public bool Done;
     private Dictionary<int, IAgent> _agents;
     private CancelationToken _token;
+    private Log _log;
 
     public VisitorOrder(
         int id,
@@ -23,7 +24,8 @@ internal class VisitorOrder : IAgent
         double total,
         List<OrderDishRequest>? dishes,
         Dictionary<int, IAgent> agents,
-        CancelationToken token)
+        CancelationToken token,
+        Log log)
     {
         Id = id;
         this.name = name;
@@ -34,12 +36,14 @@ internal class VisitorOrder : IAgent
         _agents = agents;
         _token = token;
         Done = false;
+        _log = log;
     }
 
     public Stack<Message> messages = new();
 
     public void Action()
     {
+        _log.AddLog("Visitor start working");
         Console.WriteLine("Visitor start working"); 
 
         var menuDish = _agents.
@@ -56,6 +60,7 @@ internal class VisitorOrder : IAgent
         while (messages.Count == 0)
         {
             Thread.Sleep(1000);
+            _log.AddLog("Visitor waiting for order");
             Console.WriteLine("Visitor waiting for order");
         }
 
@@ -74,17 +79,20 @@ internal class VisitorOrder : IAgent
                 }
                 else
                 {
+                    _log.AddLog("Visitor waiting for order");
                     Console.WriteLine("Visitor waiting for order");
                     Thread.Sleep(1000);
                 }
             }
 
+            _log.AddLog("Visitor take order");
             Console.WriteLine("Visitor take order");
             Done = true;
         }
         else
         {
             Thread.Sleep(1000);
+            _log.AddLog("Visitor waiting for order");
             Console.WriteLine("Visitor waiting for order");
         }
     }
@@ -96,6 +104,7 @@ internal class VisitorOrder : IAgent
 
     public void SendMessage(IAgent agent, Message message)
     {
+        _log.AddLog($"Visitor send message to {agent}");
         Console.WriteLine($"Visitor send message to {agent}");
         agent.GetMessage(message);
     }

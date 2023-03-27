@@ -1,7 +1,6 @@
 ﻿using MAS_Restaurant.Interfaces;
 using MAS_Restaurant.Requests;
 using MAS_Restaurant.Utility;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MAS_Restaurant.Agents;
 internal class SuperVisor : IAgent
@@ -17,7 +16,7 @@ internal class SuperVisor : IAgent
 
     CancelationToken _token;
 
-    private string _log;
+    public Log _log;
 
     public Stack<Message> messages = new();
 
@@ -31,8 +30,8 @@ internal class SuperVisor : IAgent
         _orders = new();
         _menu = new();
         _cookers = new();
-        _log = "";
         _agents = new();
+        _log = new Log();
     }
 
     public void Action()
@@ -49,6 +48,7 @@ internal class SuperVisor : IAgent
 
             if (activeOrders == null)
             {
+                _log.AddLog("All orders done!");
                 Console.WriteLine("All orders done!");
                 _token.Atcive = false;
             } else
@@ -69,6 +69,11 @@ internal class SuperVisor : IAgent
         throw new NotImplementedException();
     }
 
+    public Log GetLog() 
+    { 
+        return _log;
+    }
+
     // Build.
     public SuperVisor BuildCookers(IEnumerable<CookerRequest> cookers)
     {
@@ -79,7 +84,8 @@ internal class SuperVisor : IAgent
                 x.Name,
                 x.IsActive,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         return this;
     }
@@ -94,7 +100,8 @@ internal class SuperVisor : IAgent
                 x.Operations,
                 x.EquipmentTypeId,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         return this;
     }
@@ -110,7 +117,8 @@ internal class SuperVisor : IAgent
                 x.Name,
                 0,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         foreach (var item in equipments)
         {
@@ -131,7 +139,8 @@ internal class SuperVisor : IAgent
                 x.Id,
                 x.Name,
                 _agents,
-                _token)
+                _token,
+                _log)
             );
 
         return this;
@@ -149,7 +158,8 @@ internal class SuperVisor : IAgent
                 x.IsFood,
                 0,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         foreach (var item in products)
         {
@@ -168,7 +178,8 @@ internal class SuperVisor : IAgent
                 x.DishCardId,
                 x.IsActive,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         return this;
     }
@@ -187,7 +198,8 @@ internal class SuperVisor : IAgent
                 x.Total,
                 x.Dishes,
                 _agents,
-                _token));
+                _token,
+                _log));
 
         return this;
     }

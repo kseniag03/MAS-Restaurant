@@ -11,6 +11,7 @@ internal class DishCard : IAgent
     private int _equipmetType;
     private Dictionary<int, IAgent> _agents;
     private CancelationToken _token;
+    private Log _log;
 
     public DishCard(
         int id,
@@ -18,7 +19,8 @@ internal class DishCard : IAgent
         List<OperationRequest>? operations,
         int equipmentType,
         Dictionary<int, IAgent> agents,
-        CancelationToken token)
+        CancelationToken token,
+        Log log)
     {
         Id = id;
         _name = name;
@@ -26,6 +28,7 @@ internal class DishCard : IAgent
         _equipmetType = equipmentType;
         _agents = agents;
         _token = token;
+        _log = log;
     }
 
     public Stack<Message> messages = new();
@@ -36,6 +39,7 @@ internal class DishCard : IAgent
         {
             if (messages.Count > 0)
             {
+                _log.AddLog("DishCard start working");
                 Console.WriteLine("DishCard start working");
                 var message = messages.Pop();
 
@@ -79,12 +83,14 @@ internal class DishCard : IAgent
 
     public void GetMessage(Message message)
     {
+        _log.AddLog("DishCard get message");
         Console.WriteLine("DishCard get message");
         messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
+        _log.AddLog($"DishCard send message to {agent}");
         Console.WriteLine($"DishCard send message to {agent}");
         agent.GetMessage(message);
     }

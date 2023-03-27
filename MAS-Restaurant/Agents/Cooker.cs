@@ -13,13 +13,15 @@ internal class Cooker : IAgent
     CancelationToken _token;
 
     public Stack<Message> messages = new();
+    private Log _log;
 
     public Cooker(
         int id,
         string? name,
         bool isActive,
         Dictionary<int, IAgent> agents,
-        CancelationToken token)
+        CancelationToken token,
+        Log log)
     {
         _id = id;
         _name = name;
@@ -27,6 +29,7 @@ internal class Cooker : IAgent
         Cooking = false;
         _agents = agents;
         _token = token;
+        _log = log;
     }
 
     public void Action()
@@ -37,6 +40,7 @@ internal class Cooker : IAgent
             {
                 IsActive = false;
 
+                _log.AddLog("Cooker start working");
                 Console.WriteLine("Cooker start working");
 
                 var message = messages.Pop();
@@ -74,6 +78,7 @@ internal class Cooker : IAgent
          * else execute operation given time
          */
 
+        _log.AddLog("Cook take order");
         Console.WriteLine("Cook take order");
 
         List<Equipment> equipments = new List<Equipment>();
@@ -99,13 +104,16 @@ internal class Cooker : IAgent
                 if (equipment != null && equipment.Count > 0)
                 {
                     equipment.Count -= 1;
+                    _log.AddLog("Cook cooking");
                     Console.WriteLine("Cook cooking");
                     Thread.Sleep(operationTime * 10);
+                    _log.AddLog("Cook finish cooking");
                     Console.WriteLine("Cook finish cooking");
                     equipment.Count += 1;
                 }
                 else
                 {
+                    _log.AddLog("Cook wait");
                     Console.WriteLine("Cook wait");
                     // no equipment
                     // else
@@ -117,6 +125,7 @@ internal class Cooker : IAgent
             // GetMessage(); from equip to define if it is active or not
             // if not active
 
+            _log.AddLog($"Cook send message to {message.Sender}");
             Console.WriteLine($"Cook send message to {message.Sender}");
 
             SendMessage(
@@ -130,6 +139,7 @@ internal class Cooker : IAgent
 
         }
 
+        _log.AddLog("Cook done");
         Console.WriteLine("Cook done");
     }
 }
