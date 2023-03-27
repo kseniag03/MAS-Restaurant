@@ -168,6 +168,9 @@ namespace MAS_Restaurant
             // action
             visor.Action();
 
+            Log log = visor.GetLog();
+
+            JsonSerializer.WriteJsonFile(Path.Combine(Path.Combine(path, FileSettings.folderJsonOutput), "log.json"), new List<Log>() { log }, "log");
 
             var p = new ProcessResponce
             {

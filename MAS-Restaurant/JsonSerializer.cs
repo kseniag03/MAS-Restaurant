@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace MAS_Restaurant
@@ -27,16 +28,24 @@ namespace MAS_Restaurant
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
-            var jsonObject = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<TElement>>>(jsonString, options);
 
-            var list = jsonObject?[listPropertyName];
-            if (list is null)
+            try
             {
-                return null;
+                var jsonObject = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, List<TElement>>>(jsonString, options);
+
+                var list = jsonObject?[listPropertyName];
+                if (list is null)
+                {
+                    return new List<TElement>();
+                }
+                PrintList(list);
+
+                return list;
             }
-            PrintList(list);
-            
-            return list;
+            catch
+            {
+                return new List<TElement>();
+            }
         }
         
         public static void PrintList<TElement>(IEnumerable<TElement> list)

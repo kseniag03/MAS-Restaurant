@@ -8,13 +8,21 @@ internal class Operation : IAgent
     private string? _name;
     private Dictionary<int, IAgent> _agents;
     private CancelationToken _token;
+    private Log _log;
 
-    public Operation(int id, string? name, Dictionary<int, IAgent> agents, CancelationToken token)
+    public Operation(
+        int id,
+        string? name,
+        Dictionary<int,
+        IAgent> agents,
+        CancelationToken token,
+        Log log)
     {
         Id = id;
         _name = name;
         _agents = agents;
         _token = token;
+        _log = log;
     }
 
     public Stack<Message> messages = new();
@@ -39,6 +47,7 @@ internal class Operation : IAgent
         {
             if (messages.Count > 0)
             {
+                _log.AddLog($"Operation {Id} start working");
                 Console.WriteLine($"Operation {Id} start working");
                 var message = messages.Pop();
                 var list = message.Text;
@@ -78,6 +87,7 @@ internal class Operation : IAgent
                     }
                     else if (storeProduct.Count < product.Value)
                     {
+                        _log.AddLog($"Not enough {storeProduct.Name}");
                         Console.WriteLine($"Not enough {storeProduct.Name}");
                         SendMessage(message.Sender, new Message(
                                 this,
@@ -110,12 +120,14 @@ internal class Operation : IAgent
 
     public void GetMessage(Message message)
     {
+        _log.AddLog("Operation take message");
         Console.WriteLine("Operation take message");
         messages.Push(message);
     }
 
     public void SendMessage(IAgent agent, Message message)
     {
+        _log.AddLog($"Operation send message to {agent}");
         Console.WriteLine($"Operation send message to {agent}");
         agent.GetMessage(message);
     }
